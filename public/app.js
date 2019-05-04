@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", event => {
 
   db.collection('events').get().then(function(querySnapshot) {
     let table = document.querySelector('#docs')
-    // let firstDoc = querySnapshot.docs[0].data()
-    // console.log(Object.keys(firstDoc))
     let content = `
       <tr>
         <th>name</th>
@@ -12,42 +10,36 @@ document.addEventListener("DOMContentLoaded", event => {
         <th>attendees</th>
       </tr>
     `
+    table.innerHTML = content
 
     querySnapshot.forEach(function(doc) {
-        content += `
-          <tr>
-            <td>${doc.data().name}</td>
-            <td>${doc.data().description}</td>
-            <td></td>
-          </tr>`
-        // insertNameList(db, doc.data().attendees, 'attendees')
+      let row = document.createElement('tr')
+      table.appendChild(row)
+
+      let nameCell = document.createElement('td')
+      nameCell.innerText = doc.data().name
+      row.appendChild(nameCell)
+
+      let descrCell = document.createElement('td')
+      descrCell.innerText = doc.data().description
+      row.appendChild(descrCell)
+
+      let attendeesCell = document.createElement('td')
+      row.appendChild(attendeesCell)
+      insertNameList(attendeesCell, db, doc.data().attendees)
     });
-    table.innerHTML = content
   });
 })
 
-function insertNameList(db, attendees, elementID) {
-  let firstAttendee = db.collection('people').doc(attendees[0].id)
-
-  let name = firstAttendee.get().then(person => {
-    document.querySelector('#'+id).innerText( person.data().name )
+function insertNameList(element, db, attendees) {
+  attendees.forEach( ref => {
+    let personDoc = db.collection('people').doc(ref.id)
+    personDoc.get().then(person => {
+      let personLink = document.createElement('a')
+      personLink.setAttribute('href', '#')
+      personLink.addEventListener('click', () => console.log('show '+person.data().name))
+      personLink.innerText = person.data().name
+      element.appendChild(personLink)
+    })
   })
-  // let reducer = (names, ref) => {
-  //   let personDoc = db.collection('people').doc(ref.id)
-  //   let s = ' eh '
-  //   personDoc.get().then(person => {
-  //     s = person.data().name
-  //     console.log(person.data().name)
-  //   })
-  //   return names + s + ref.id
-  // }
-  // let personDoc = db.collection('people').doc(ref.id)
-  // personDoc.get().then(person => {
-  //   namesString += person.data().name
-  //   console.log(namesString)
-  // })
-
-  // console.log(attendees.reduce(reducer, ''))
-  console.log(name)
-  return name
 }
