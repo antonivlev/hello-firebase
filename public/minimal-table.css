@@ -2,21 +2,23 @@ svg {
   border: 1px dotted grey;
 }
 
-rect {
-  fill: none;
-  pointer-events: all;
+circle {
+  r: 7;
 }
 
-.node {
+h3 {
+  font-family: monospace;
+  border: 1px dotted grey;
+}
+
+.person {
   fill: #000;
 }
 
-.cursor {
-  fill: none;
-  stroke: brown;
-  pointer-events: none;
+.event {
+  fill: grey;
 }
 
-.link {
+line {
   stroke: #999;
 }
