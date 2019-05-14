@@ -11,6 +11,11 @@ h3 {
   border: 1px dotted grey;
 }
 
+.selected {
+  stroke: red;
+  stroke-width: 2px;
+}
+
 .person {
   fill: #000;
 }

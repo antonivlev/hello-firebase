@@ -19,7 +19,10 @@ svg.selectAll('circle')
   .enter().append('circle')
     .attr('id', d => d.id)
     .attr('class', d => d.id.includes('e_') ? 'event' : 'person')
-    .on('mouseover', d => d3.select('#id-info').text('id: '+d.id) );
+    // basic interactivity
+    .on('mouseover', (_, i, circles) => circles[i].classList.add('selected'))
+    .on('mouseout', (_, i, circles) => circles[i].classList.remove('selected'))
+    .on('click', d => d3.select('#id-info').text('id: '+d.id) );
 
 var simulation = d3.forceSimulation(nodes)
   // ^ adds x, y, vx, vy, to each obj in people. These update according to forces below.
