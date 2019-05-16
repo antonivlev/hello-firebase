@@ -16,19 +16,23 @@ document.addEventListener("DOMContentLoaded", event => {
 
   db.collection('events').get()
     .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        let docData = doc.data();
-        nodes.push( {...docData, event: true} );
-        docData.attendees.forEach( ref => {
-          ref.get().then( (doc) => console.log('---',doc.data()) );
-        });
+      querySnapshot.forEach(eventDoc => {
+        let docData = eventDoc.data();
+        nodes.push( {id: eventDoc.id, ...docData, event: true} );
+        docData.attendees.forEach(
+          ref => ref.get().then(
+            personDoc => {
+              //console.log(doc.id);
+              links.push( {source: eventDoc.id, target: personDoc.id} )
+              nodes.push( {id: personDoc.id, ...personDoc.data()} );
+            }
+          )
+        );
       });
-    })
-    .then(() => {
-      console.log('drawing now');
-      setUpSim(svg, nodes, links);
     });
 })
+
+setUpSim(svg, nodes, links);
 
 // var {fnodes, flinks} = getData();
 // setUpSim(svg, fnodes, flinks);

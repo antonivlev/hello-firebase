@@ -1,22 +1,27 @@
 function setUpSim(svg, nodes, links) {
-  // append line for each link
-  svg.selectAll('line')
-    .data(links)
-    .enter().append('line');
+  // update rule: data -> elements
+  function ticked() {
+    // ENTER
+    // append line for each link
+    this.nodes(nodes);
+    this.force('links', d3.forceLink().id(d => d.id).links(links).distance(70));
 
-  // append circle for each data point
-  svg.selectAll('circle')
-    .data(nodes)
-    .enter().append('circle')
-      .attr('id', d => d.id)
-      .attr('class', d => d.event ? 'event' : 'person')
-      // basic interactivity
-      .on('mouseover', (_, i, circles) => circles[i].classList.add('selected'))
-      .on('mouseout', (_, i, circles) => circles[i].classList.remove('selected'))
-      .on('click', d => d3.select('#id-info').text('name: '+d.name) );
+    svg.selectAll('line')
+      .data(links)
+      .enter().append('line');
 
-  // update rule: data -> element attrs
-  let ticked = () => {
+    // append circle for each data point
+    svg.selectAll('circle')
+      .data(nodes)
+      .enter().append('circle')
+        .attr('id', d => d.id)
+        .attr('class', d => d.event ? 'event' : 'person')
+        // basic interactivity
+        .on('mouseover', (_, i, circles) => circles[i].classList.add('selected'))
+        .on('mouseout', (_, i, circles) => circles[i].classList.remove('selected'))
+        .on('click', d => d3.select('#id-info').text('name: '+d.name) );
+
+    // UPDATE
     svg.selectAll('circle')
       .data(nodes)
         // ^ returns data currently bound to elements
@@ -29,6 +34,10 @@ function setUpSim(svg, nodes, links) {
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
+
+    // EXIT
+    svg.selectAll('circle').data(nodes).exit().remove();
+    svg.selectAll('line').data(links).exit().remove();
   }
 
   var simulation = d3.forceSimulation(nodes)
