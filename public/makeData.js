@@ -1,3 +1,17 @@
+var stuff = [];
+document.addEventListener("DOMContentLoaded", event => {
+  const db = firebase.firestore()
+
+  db.collection('events').get()
+    .then(querySnapshot => {
+      console.log('stuff: ', stuff);
+      querySnapshot.forEach(doc => {
+        stuff.push(doc.data());
+      });
+    })
+    .then(() => console.log('stuff: ', stuff));
+})
+
 function getData() {
   var events = [
     {
@@ -32,7 +46,7 @@ function getData() {
   var links = [
     {source: 'bob', target: 'dave'},
     {source: 'bob', target: 'josh'},
-    {source: 'josh', target: 'dave'},
+    {source: 'josh', target: 'sam'},
   ]
 
   return {nodes: events.concat(people), links: links}
