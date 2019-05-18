@@ -2,42 +2,26 @@ function setUpSim(svg, nodes, links) {
   // update rule: data -> elements
   function ticked() {
     // ENTER
-    // append line for each link
-    this.nodes(nodes);
-    this.force('links', d3.forceLink().id(d => d.id).links(links).distance(70));
-
     svg.selectAll('line')
       .data(links)
-      .enter().append('line');
-
-    // append circle for each data point
-    svg.selectAll('circle')
-      .data(nodes)
-      .enter().append('circle')
-        .attr('id', d => d.id)
-        .attr('class', d => d.event ? 'event' : 'person')
-        // basic interactivity
-        .on('mouseover', (_, i, circles) => circles[i].classList.add('selected'))
-        .on('mouseout', (_, i, circles) => circles[i].classList.remove('selected'))
-        .on('click', d => d3.select('#id-info').text('name: '+d.name) );
-
-    // UPDATE
-    svg.selectAll('circle')
-      .data(nodes)
-        // ^ returns data currently bound to elements
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y);
-
-    svg.selectAll('line')
-      .data(links)
+      .join('line')
         .attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
 
-    // EXIT
-    svg.selectAll('circle').data(nodes).exit().remove();
-    svg.selectAll('line').data(links).exit().remove();
+    // append circle for each data point
+    svg.selectAll('circle')
+      .data(nodes)
+      .join('circle')
+        .attr('id', d => d.id)
+        .attr('class', d => d.event ? 'event' : 'person')
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+        // basic interactivity
+        .on('mouseover', (_, i, circles) => circles[i].classList.add('selected'))
+        .on('mouseout', (_, i, circles) => circles[i].classList.remove('selected'))
+        .on('click', d => d3.select('#id-info').text('name: '+d.name) );
   }
 
   var simulation = d3.forceSimulation(nodes)
@@ -48,4 +32,6 @@ function setUpSim(svg, nodes, links) {
     .force('links', d3.forceLink().id(d => d.id).links(links).distance(70))
     .on('tick', ticked);
     // ^ say what to do on internal tick of the sim
+
+  return simulation;
 }

@@ -23,16 +23,16 @@ document.addEventListener("DOMContentLoaded", event => {
           ref => ref.get().then(
             personDoc => {
               //console.log(doc.id);
-              links.push( {source: eventDoc.id, target: personDoc.id} )
-              nodes.push( {id: personDoc.id, ...personDoc.data()} );
+              // links.push( {source: eventDoc.id, target: personDoc.id} )
+              // nodes.push( {id: personDoc.id, ...personDoc.data()} );
             }
           )
         );
       });
+    }).then(() => {
+      setUpSim(svg, nodes, links);
     });
 })
-
-setUpSim(svg, nodes, links);
 
 // var {fnodes, flinks} = getData();
 // setUpSim(svg, fnodes, flinks);
