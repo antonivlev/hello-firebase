@@ -10,6 +10,8 @@ var info = d3.select('body').append('h3')
 // global data stuff
 var nodes = [];
 var links = [];
+var sim = setUpSim(svg, nodes, links);
+
 
 document.addEventListener("DOMContentLoaded", event => {
   const db = firebase.firestore()
@@ -23,15 +25,15 @@ document.addEventListener("DOMContentLoaded", event => {
           ref => ref.get().then(
             personDoc => {
               //console.log(doc.id);
-              // links.push( {source: eventDoc.id, target: personDoc.id} )
-              // nodes.push( {id: personDoc.id, ...personDoc.data()} );
+              links.push( {source: eventDoc.id, target: personDoc.id} )
+              nodes.push( {id: personDoc.id, ...personDoc.data()} );
+              sim.nodes(nodes);
+              sim.alpha(1);
             }
           )
         );
       });
-    }).then(() => {
-      setUpSim(svg, nodes, links);
-    });
+    })
 })
 
 // var {fnodes, flinks} = getData();
