@@ -35,5 +35,5 @@ function getData() {
     {source: 'josh', target: 'sam'},
   ]
 
-  return {fnodes: events.concat(people), flinks: links}
+  return {nodes: events.concat(people), links: links}
 }
