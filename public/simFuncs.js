@@ -1,18 +1,29 @@
 function setUpSim(g, nodes, links) {
   // update rule: data -> elements
   function ticked() {
-    // append circle for each data point
-    g.selectAll('circle')
+    // append group containing (circle, text) for each data point
+    // NOTE: would be nice to define node markup and behaviour in a separate html file
+    let node = g.selectAll('.node')
       .data(nodes)
-      .join('circle')
-        .attr('id', d => d.id)
-        .attr('class', d => d.event ? 'event' : 'person')
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
+      .enter()
+      .append('g')
+        .attr('class', 'node')
         // basic interactivity
-        .on('mouseover', (_, i, circles) => circles[i].classList.add('selected'))
-        .on('mouseout', (_, i, circles) => circles[i].classList.remove('selected'))
+        .on('mouseover', (_, i, groups) => groups[i].classList.add('selected'))
+        .on('mouseout', (_, i, groups) => groups[i].classList.remove('selected'))
         .on('click', d => d3.select('#id-info').text('name: '+d.name) );
+
+    // construct node
+    node.append('circle')
+      .attr('id', d => d.id)
+      .attr('class', d => d.event ? 'event' : 'person');
+    node.append('text').text(d => d.name);
+
+
+    // update selections and links
+    g.selectAll('.node')
+      .data(nodes)
+        .attr('transform', d => "translate(" + d.x + "," + d.y + ")");
 
     g.selectAll('line')
       .data(links)

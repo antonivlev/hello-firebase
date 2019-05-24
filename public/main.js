@@ -1,4 +1,5 @@
 // global dom stuff
+// laying out interface
 var width = 300, height = 300
 var svg = d3.select('body').append('svg')
   .attr('width', width)
@@ -15,12 +16,6 @@ function zoomed() {
 var info = d3.select('body').append('h3')
   .attr('id', 'id-info');
 
-
-// global data stuff
-var nodes = [];
-var links = [];
-var sim = setUpSim(g, nodes, links);
-
 var button = d3.select('body').append('button')
   .on('click', () => {
     nodes.push( {id: 'new-boi'} );
@@ -31,6 +26,13 @@ var button = d3.select('body').append('button')
   })
   .text('add node');
 
+// global data stuff
+var nodes = [];
+var links = [];
+var sim = setUpSim(g, nodes, links);
+
+
+// fetch data
 document.addEventListener("DOMContentLoaded", event => {
   const db = firebase.firestore()
 
