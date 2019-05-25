@@ -17,8 +17,8 @@ function setUpSim(g, nodes, links) {
       .append("g")
         .attr("class", "node")
         // basic interactivity
-        .on("mouseover", (_, i, groups) => groups[i].classList.add("selected"))
-        .on("mouseout", (_, i, groups) => groups[i].classList.remove("selected"))
+        .on("mouseover", (_, i, groups) => groups[i].classList.add("highlighted"))
+        .on("mouseout", (_, i, groups) => groups[i].classList.remove("highlighted"))
         .on("click", d => d3.select("#id-info").text("name: "+d.name) );
 
     // construct node

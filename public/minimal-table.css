@@ -19,9 +19,14 @@ h3 {
   border: 1px dotted grey;
 }
 
-.selected circle {
-  stroke: red;
+.highlighted circle {
+  transform: scale(2);
+  /* stroke: red; */
   stroke-width: 2px;
+}
+.highlighted text {
+  transform-origin: 4% -6%;
+  transform: scale(2);
 }
 
 .person {
