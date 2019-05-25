@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", event => {
           ref => ref.get().then(
             personDoc => {
               links.push( {source: eventDoc.id, target: personDoc.id} )
-              nodes.push( {id: personDoc.id, ...personDoc.data()} );
               sim.nodes(nodes);
               sim.alpha(1);
               sim.restart();
@@ -59,4 +58,12 @@ document.addEventListener("DOMContentLoaded", event => {
         );
       });
     });
+
+  db.collection('people').get()
+    .then(snapshot => snapshot.forEach(personDoc => {
+      nodes.push( {id: personDoc.id, ...personDoc.data()} );
+      sim.nodes(nodes);
+      sim.alpha(1);
+      sim.restart();
+    }));
 });
