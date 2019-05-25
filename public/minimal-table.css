@@ -6,6 +6,10 @@ svg {
   border: 1px dotted grey;
 }
 
+text {
+  font-size: 10px;
+}
+
 circle {
   r: 7;
 }

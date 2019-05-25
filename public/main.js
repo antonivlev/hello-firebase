@@ -1,13 +1,14 @@
 // global dom stuff
 // laying out interface
-var width = 300, height = 300
+var width = 700, height = 500
 var svg = d3.select('body').append('svg')
   .attr('width', width)
   .attr('height', height)
   .call(d3.zoom()
-    .on("zoom", zoomed));
+    .on('zoom', zoomed));
 
 var g = svg.append('g');
+g.append('g').attr("id", "edges");
 
 function zoomed() {
   g.attr("transform", d3.event.transform);
