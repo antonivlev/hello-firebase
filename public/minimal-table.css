@@ -6,12 +6,22 @@ svg {
   border: 1px dotted grey;
 }
 
+/* ensures selections are highlighted */
+#edges {
+  opacity: 0.3;
+}
+.node:not(.selected) {
+  opacity: 0.3;
+}
+
 text {
   font-size: 10px;
 }
 
 circle {
+  stroke: white;
   r: 7;
+  stroke-width: 1px;
 }
 
 h3 {
@@ -21,8 +31,6 @@ h3 {
 
 .highlighted circle {
   transform: scale(2);
-  /* stroke: red; */
-  stroke-width: 2px;
 }
 .highlighted text {
   transform-origin: 4% -6%;

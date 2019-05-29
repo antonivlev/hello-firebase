@@ -15,15 +15,13 @@ function setUpSim(g, nodes, links) {
       .data(nodes)
       .enter()
       .append("g")
-        .attr("class", "node")
-        // basic interactivity
-        .on("mouseover", (_, i, groups) => groups[i].classList.add("highlighted"))
-        .on("mouseout", (_, i, groups) => groups[i].classList.remove("highlighted"))
-        .on("click", d => d3.select("#id-info").text("name: "+d.name) );
+        .attr("id", d => d.id)
+        .attr("class", "node");
+
+    addInteractivity(node);
 
     // construct node
     node.append("circle")
-      .attr("id", d => d.id)
       .attr("class", d => d.event ? "event" : "person");
     node.append("text")
       .attr("transform", "translate(-10, 15)")
@@ -41,9 +39,21 @@ function setUpSim(g, nodes, links) {
     .force("charge", d3.forceManyBody().strength(() => -200))
     .force("center", d3.forceCenter(width / 2, height / 2))
     // adds x, y to source and target in links
-    .force("links", d3.forceLink().id(d => d.id).links(links).distance(200))
+    .force("links", d3.forceLink().id(d => d.id).links(links).distance(300))
     .on("tick", ticked)
     // ^ say what to do on internal tick of the sim
 
   return simulation;
+}
+
+function addInteractivity(nodeSelection) {
+  // basic interactivity
+  nodeSelection
+    .on("mouseover", (_, i, groups) => groups[i].classList.add("highlighted"))
+    .on("mouseout", (_, i, groups) => groups[i].classList.remove("highlighted"))
+    .on("click", (d, i, groups) => {
+      let node = groups[i];
+      node.classList.contains("selected") ? node.classList.remove("selected") : node.classList.add("selected");
+      d3.select("#id-info").text("name: "+d.name)
+    } );
 }

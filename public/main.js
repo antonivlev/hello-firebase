@@ -32,6 +32,14 @@ var nodes = [];
 var links = [];
 var sim = setUpSim(g, nodes, links);
 
+function getNeighbourElems(node, links){
+  // messiness because of one way links only from events
+  let neighbourIDs = links.filter(e => e.source === node || e.target === node)
+    .map(e => e.target === node ? e.source.id : e.target.id);
+  //console.log(neighbourIDs);
+  let nodeElems = neighbourIDs.map(id => d3.select("#"+id).node());
+  return nodeElems;
+}
 
 // fetch data
 document.addEventListener("DOMContentLoaded", event => {

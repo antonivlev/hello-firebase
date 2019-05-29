@@ -4,11 +4,13 @@ document.addEventListener("DOMContentLoaded", e => {
 
   clearCollection(db, "events");
   clearCollection(db, "people").then(() => {
+    var topics = ["bats", "clouds", "hedgehogs", "soy", "protein"]
     var peopleRef = db.collection("people");
     for (i=0;i<150;i++) {
       peopleRef.doc("person"+i).set(
         {
           name: "person"+i,
+          description: "This is person"+i+" and he is great at :"+_.sample(topics, Math.floor(Math.random() * Math.floor(10))).join(),
         }
       );
     }
