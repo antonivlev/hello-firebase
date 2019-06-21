@@ -26,12 +26,28 @@
     <script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
     <script src="https://d3js.org/d3-timer.v1.min.js"></script>
     <script src="https://d3js.org/d3-force.v2.min.js"></script>
+
+    <script src="simFuncs.js"></script>
+    <script src="node.js"></script>
   </head>
 
   <body>
+    <svg>
+      <g id="group-for-zooming">
+        <!-- nodes go here -->
+        <g id="edges">
+          <!-- edges go here so they appear undeneath nodes-->
+        </g>
+      </g>
+    </svg>
+
+    <div id="node-info">
+    </div>
+
+    <button onclick="createNode()">add node</button>
+
     <!-- <script src="popdb.js"></script> -->
     <!-- <script src="dataFuncs.js"></script> -->
-    <script src="simFuncs.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

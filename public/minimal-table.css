@@ -3,6 +3,8 @@ td {
 }
 
 svg {
+  width: 700px;
+  height: 500px;
   border: 1px dotted grey;
 }
 
@@ -24,7 +26,8 @@ circle {
   stroke-width: 1px;
 }
 
-h3 {
+#node-info {
+  float: right;
   font-family: monospace;
   border: 1px dotted grey;
 }
