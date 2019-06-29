@@ -1,35 +1,56 @@
-html {
-    font-family: sans-serif;
-}
-  
-table {
-    border-collapse: collapse;
-    border: 2px solid rgb(200,200,200);
-    letter-spacing: 1px;
-    font-size: 0.8rem;
-}
-
-td, th {
-    border: 1px solid rgb(190,190,190);
-    padding: 10px 20px;
-}
-
-th {
-    background-color: rgb(235,235,235);
-}
-
 td {
-    text-align: center;
+  border: 1px dotted blue;
 }
 
-tr:nth-child(even) td {
-    background-color: rgb(250,250,250);
+svg {
+  width: 700px;
+  height: 500px;
+  border: 1px dotted grey;
 }
 
-tr:nth-child(odd) td {
-    background-color: rgb(245,245,245);
+/* ensures selections are highlighted */
+#edges {
+  opacity: 0.3;
+}
+.node:not(.selected) {
+  opacity: 0.3;
+}
+g.node * {
+  outline: 1px dotted blue;
 }
 
-caption {
-    padding: 10px;
+text {
+  font-size: 10px;
+}
+
+circle {
+  stroke: white;
+  r: 7;
+  stroke-width: 1px;
+}
+
+#node-info {
+  float: right;
+  font-family: monospace;
+  border: 1px dotted grey;
+}
+
+.highlighted circle {
+  transform: scale(2);
+}
+.highlighted text {
+  transform-origin: 4% -6%;
+  transform: scale(2);
+}
+
+.person {
+  fill: #000;
+}
+
+.event {
+  fill: grey;
+}
+
+line {
+  stroke: #999;
 }

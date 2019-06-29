@@ -18,12 +18,32 @@
 
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
+
+    <script src="//d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
+    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+    <script src="https://d3js.org/d3-force.v2.min.js"></script>
+
+    <script src="simFuncs.js"></script>
+    <script src="node.js"></script>
   </head>
 
   <body>
-    <h3 id="coll-title">events</h3>
-    <table id="docs"></table>
+    <svg>
+      <g id="group-for-zooming">
+        <!-- nodes go here -->
+        <g id="edges">
+          <!-- edges go here so they appear undeneath nodes-->
+        </g>
+      </g>
+    </svg>
 
-    <script src="app.js"></script>
+    <div id="node-info">
+    </div>
+
+    <button onclick="createNode()">add node</button>
+
+    <script src="main.js"></script>
   </body>
 </html>
