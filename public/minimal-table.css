@@ -15,6 +15,9 @@ svg {
 .node:not(.selected) {
   opacity: 0.3;
 }
+g.node * {
+  outline: 1px dotted blue;
+}
 
 text {
   font-size: 10px;

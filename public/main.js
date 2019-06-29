@@ -1,5 +1,3 @@
-//import {Node} from "/public/node.js";
-
 // set up zoom
 d3.select("svg")
   .call(
@@ -11,6 +9,26 @@ d3.select("svg")
     })
   );
 
+document.addEventListener("DOMContentLoaded", e => {
+  // load all the nodes from db
+  const db = firebase.firestore();
+  db.collection("people").get().then(snapshot => {
+    snapshot.forEach( doc => {
+      let n = new Node( {id: doc.id, ...doc.data()} );
+    });
+  });
+});
+
 function createNode() {
   let n1 = new Node();
+}
+
+
+// utility debug func
+function clearCollection(db, name) {
+  return db.collection(name).get().then(snapshot => {
+    snapshot.docs.map( d => {
+      if (d.data().name !== "control") d.ref.delete();
+    });
+  });
 }
